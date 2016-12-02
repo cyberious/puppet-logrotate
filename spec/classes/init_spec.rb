@@ -27,15 +27,18 @@ describe 'logrotate' do
             #    })
 
             is_expected.to contain_file('/etc/logrotate.d').with('ensure' => 'directory',
-                                                                 'owner'   => 'root',
-                                                                 'group'   => 'root',
-                                                                 'mode'    => '0755')
+                                                                 'owner' => 'root',
+                                                                 'group' => 'root',
+                                                                 'mode' => '0755')
 
-            is_expected.to contain_file('/etc/cron.daily/logrotate').with('ensure' => 'file',
-                                                                          'owner'   => 'root',
-                                                                          'group'   => 'root',
-                                                                          'mode'    => '0555',
-                                                                          'source'  => 'puppet:///modules/logrotate/etc/cron.daily/logrotate')
+            is_expected.to contain_file('/etc/cron.daily/logrotate').with(
+                {
+                    'ensure' => 'file',
+                    'owner' => 'root',
+                    'group' => 'root',
+                    'mode' => '0555',
+                    'source' => 'puppet:///modules/logrotate/etc/cron.daily/logrotate',
+                })
 
             is_expected.to contain_class('logrotate::defaults')
           end
